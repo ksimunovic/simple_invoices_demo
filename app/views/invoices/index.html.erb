@@ -1,0 +1,15 @@
+<h1>Invoices</h1>
+<table class="table">
+  <thead>
+    <tr class="table__header">
+      <th class="table__header">Client Name</th>
+      <th class="table__header table__header--amount">Amount</th>
+      <th class="table__header table__header--amount">Tax</th>
+      <th class="table__header table__header--amount">Total</th>
+      <th class="table__header"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @invoices %>
+  </tbody>
+</table>
