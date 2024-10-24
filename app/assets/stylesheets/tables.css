@@ -1,0 +1,48 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table__header {
+  background-color: #f9fafb;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+}
+
+.table__cell,
+.table__header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table__header--amount {
+  text-align: right;
+}
+
+.table__cell--amount {
+  font-family: "Roboto Mono", monospace;
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+.table__cell--controls {
+  text-align: right;
+}
+
+.table__total {
+  font-weight: 600;
+  color: #666;
+}
+
+.table__control {
+  color: #6b7280;
+  display: inline-block;
+}
+
+.table__control--edit:hover {
+  color: #39c7bd;
+}
