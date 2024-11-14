@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_13_100828) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_14_111953) do
   create_table "invoices", force: :cascade do |t|
     t.string "client_name", null: false
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "tax", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["client_name"], name: "index_invoices_on_client_name", unique: true
   end
 end
