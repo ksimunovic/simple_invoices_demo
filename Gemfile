@@ -7,6 +7,8 @@ gem "puma", ">= 5.0"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
+gem "acts_as_paranoid"
+gem "hotwire-rails"
 
 group :development do
   gem "standard"
