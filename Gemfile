@@ -5,6 +5,10 @@ source 'https://rubygems.org'
 ruby '3.3.5' # Specify a compatible Ruby version
 
 gem 'acts_as_paranoid'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', require: false
+
 gem 'hotwire-rails'
 gem 'importmap-rails'
 gem 'propshaft'
@@ -17,9 +21,6 @@ gem 'turbo-rails'
 group :development do
   gem 'standard'
   gem 'standard-rails'
-
-  # Reduces boot times through caching; required in config/boot.rb
-  gem 'bootsnap', require: false
 
   gem 'rubocop'
   gem 'rubocop-rails'
