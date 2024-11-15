@@ -11,8 +11,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = find_invoice
-    return handle_not_found if @invoice.nil?
+    @invoice = Invoice.new(invoice_params)
 
     if @invoice.save
       respond_to do |format|

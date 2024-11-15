@@ -21,10 +21,14 @@ group :development do
 
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
 end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
   gem 'faker'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
 end
