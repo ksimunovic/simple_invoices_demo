@@ -1,7 +1,7 @@
 <h1>Invoices</h1>
 
-<div id="invoice_form">
-  <%= render 'form', invoice: @invoice || Invoice.new %>
+<div class="form__container">
+  <%= render 'form', invoice: @invoice || Invoice.new, class: "form__content" %>
 </div>
 
 <table class="table">
