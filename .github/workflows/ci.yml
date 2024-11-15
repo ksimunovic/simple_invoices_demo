@@ -55,6 +55,26 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env: # PostgreSQL environment variables
+          POSTGRES_DB: test_db
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U user"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env: # Define your environment variables here
+      DB_USERNAME: user
+      DB_PASSWORD: password
+      DATABASE: test_db
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -67,6 +87,15 @@ jobs:
 
       - name: Install dependencies
         run: bundle install
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            if pg_isready -h localhost -p 5432 -U user; then
+              break
+            fi
+            sleep 1
+          done
 
       - name: Set up database
         run: bin/rails db:test:prepare
