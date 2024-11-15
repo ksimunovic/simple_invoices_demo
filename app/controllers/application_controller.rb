@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
 
   def handle_exception(exception)
     flash[:error] = "An error occurred: #{exception.message}"
-    redirect_to root_path and return unless performed?
+    redirect_to root_path and nil unless performed?
   end
 end

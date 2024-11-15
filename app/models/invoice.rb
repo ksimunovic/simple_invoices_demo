@@ -4,7 +4,7 @@
 class Invoice < ApplicationRecord
   acts_as_paranoid
 
-  validates :client_name, presence: true, uniqueness: true
+  validates :client_name, presence: true, uniqueness: { allow_blank: true, conditions: -> { where(deleted_at: nil) } }
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :tax, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
