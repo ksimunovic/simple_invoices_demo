@@ -17,7 +17,7 @@ class InvoicesController < ApplicationController
           render turbo_stream: [
             turbo_stream.replace('invoice_form', partial: 'invoices/form',
                                                  locals: { invoice: Invoice.new }),
-            turbo_stream.replace("invoice_#{@invoice.id}", partial: 'invoices/invoice',
+            turbo_stream.prepend("invoices", partial: 'invoices/invoice',
                                                            locals: { invoice: @invoice })
           ]
         end

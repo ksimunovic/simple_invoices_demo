@@ -17,12 +17,12 @@
 
   <div>
     <%= form.label :amount %>
-    <%= form.number_field :amount %>
+    <%= form.number_field :amount, min: 0.01, step: '0.01' %>
   </div>
 
   <div>
     <%= form.label :tax %>
-    <%= form.number_field :tax %>
+    <%= form.number_field :tax, min: 0.01, step: '0.01' %>
   </div>
 
   <div>
