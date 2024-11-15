@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Creates clients table
 class CreateClients < ActiveRecord::Migration[7.2]
   def change
     create_table :clients do |t|

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Shift around data to use clients entity instead of client_name
 class MoveClientNameToClientId < ActiveRecord::Migration[7.2]
   def up
     # Add the client reference with null: true
@@ -21,7 +22,7 @@ class MoveClientNameToClientId < ActiveRecord::Migration[7.2]
 
   def down
     # Re-add client_name and remove client_id
-    add_column :invoices, :client_name, :string, null: false
+    add_column :invoices, :client_name, :string
     Invoice.reset_column_information
     Invoice.find_each do |invoice|
       invoice.update(client_name: invoice.client.name)

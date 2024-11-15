@@ -1,0 +1,12 @@
+<nav>
+  <% if user_signed_in? %>
+    <span>Welcome, <%= current_user.email %></span>
+    <%= form_with(url: destroy_user_session_path, method: :delete, data: { turbo: false }, local: true) do %>
+      <%= button_tag 'Logout' %>
+    <% end %>
+
+  <% else %>
+    <%= link_to 'Login', new_user_session_path %>
+    <%= link_to 'Sign Up', new_user_registration_path %>
+  <% end %>
+</nav>

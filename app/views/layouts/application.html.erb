@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<%= render 'layouts/navigation' %>
 <div data-controller="flash" class="flash-container">
   <% flash.each do |key, message| %>
     <div class="flash-message flash-<%= key %>" data-flash-target="message">

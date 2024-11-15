@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Enables searching of existing clients
 class ClientsController < ApplicationController
   def index
     return render json: [] if params[:name].strip.empty?
