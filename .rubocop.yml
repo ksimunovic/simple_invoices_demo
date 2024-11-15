@@ -1,0 +1,8 @@
+require:
+  - rubocop-rails
+AllCops:
+  NewCops: disable
+Metrics/AbcSize:
+  Max: 30
+Metrics/MethodLength:
+  Max: 15

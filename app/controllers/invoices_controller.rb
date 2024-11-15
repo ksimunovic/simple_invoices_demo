@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvoicesController < ApplicationController
   def index
     @invoices = Invoice.order(created_at: :desc).all
@@ -11,24 +13,23 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     if @invoice.save
       respond_to do |format|
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace('invoice_form',
-                                 partial: 'invoices/form',
-                                 locals: { invoice: Invoice.new }),
-            turbo_stream.replace("invoice_#{@invoice.id}",
-                                 partial: 'invoices/invoice',
-                                 locals: { invoice: @invoice })
+            turbo_stream.replace('invoice_form', partial: 'invoices/form',
+                                                 locals: { invoice: Invoice.new }),
+            turbo_stream.replace("invoice_#{@invoice.id}", partial: 'invoices/invoice',
+                                                           locals: { invoice: @invoice })
           ]
-        }
+        end
         format.html { redirect_to invoices_path }
       end
     else
       respond_to do |format|
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace('invoice_form',
                                                     partial: 'invoices/form',
-                                                    locals: { invoice: @invoice }) }
+                                                    locals: { invoice: @invoice })
+        end
       end
     end
   end
@@ -36,9 +37,11 @@ class InvoicesController < ApplicationController
   def edit
     @invoice = Invoice.find(params[:id])
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.replace('invoice_form',
-                                                                      partial: 'invoices/form',
-                                                                      locals: { invoice: @invoice }) }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('invoice_form',
+                                                  partial: 'invoices/form',
+                                                  locals: { invoice: @invoice })
+      end
     end
   end
 
@@ -46,23 +49,22 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     if @invoice.update(invoice_params)
       respond_to do |format|
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace('invoice_form',
-                                 partial: 'invoices/form',
-                                 locals: { invoice: Invoice.new }),
-            turbo_stream.replace("invoice_#{@invoice.id}",
-                                 partial: 'invoices/invoice',
-                                 locals: { invoice: @invoice })
+            turbo_stream.replace('invoice_form', partial: 'invoices/form',
+                                                 locals: { invoice: Invoice.new }),
+            turbo_stream.replace("invoice_#{@invoice.id}", partial: 'invoices/invoice',
+                                                           locals: { invoice: @invoice })
           ]
-        }
+        end
         format.html { redirect_to invoices_path }
       end
     else
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('invoice_form',
-                                                                        partial: 'invoices/form',
-                                                                        locals: { invoice: @invoice }) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('invoice_form', partial: 'invoices/form',
+                                                                    locals: { invoice: @invoice })
+        end
       end
     end
   end
