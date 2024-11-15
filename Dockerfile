@@ -1,14 +1,14 @@
 # Use Ruby image
 FROM ruby:3.3.5
 
-# Install Node.js
+# Install dependencies
 RUN apt-get update -y && \
-    apt-get install -y nodejs npm
+    apt-get install -y nodejs npm postgresql-client
 
 # Set working directory
 WORKDIR /app
 
-# Copy only the Gemfile and Gemfile.lock
+# Copy Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
 
 # Install gems
