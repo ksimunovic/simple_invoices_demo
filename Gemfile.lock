@@ -262,6 +262,8 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails (~> 7.2.1)
+  rubocop
+  rubocop-rails
   sqlite3 (>= 1.4)
   standard
   standard-rails
