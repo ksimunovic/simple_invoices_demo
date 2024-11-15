@@ -2,6 +2,8 @@
 
 # Enables searching of existing clients
 class ClientsController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
   def index
     return render json: [] if params[:name].strip.empty?
 

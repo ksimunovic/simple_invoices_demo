@@ -2,6 +2,8 @@
 
 # Controller for handling invoice resource
 class InvoicesController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
   def index
     @invoices = Invoice.order(created_at: :desc).all
   end

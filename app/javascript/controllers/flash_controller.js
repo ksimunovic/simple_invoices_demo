@@ -8,7 +8,7 @@ export default class extends Controller {
         if (this.hasMessageTarget) {
             setTimeout(() => {
                 this.messageTarget.closest('.flash-message').remove();
-            }, 5000);
+            }, 50000000);
         }
     }
 

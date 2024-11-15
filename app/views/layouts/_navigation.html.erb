@@ -1,13 +1,15 @@
-<nav>
-  <% if user_signed_in? %>
-    <span>Welcome, <%= current_user.email %></span>
-    <%= form_with(url: destroy_user_session_path, method: :delete, data: { turbo: false }, local: true) do %>
-      <%= button_tag 'Logout' %>
+<nav class="navbar">
+  <div class="navbar-links">
+    <%= link_to 'Invoices', invoices_path, class: 'nav-link' %>
+    <%= link_to 'Letter Opener', '/letter_opener', class: 'nav-link' %>
+    <% if user_signed_in? %>
+      <span class="welcome-message">Welcome, <%= current_user.email %></span>
+      <%= form_with(url: destroy_user_session_path, method: :delete, data: { turbo: false }, local: true, class: 'logout-form') do %>
+        <%= button_tag 'Logout', class: 'btn btn-logout' %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: 'nav-link' %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
     <% end %>
-
-  <% else %>
-    <%= link_to 'Login', new_user_session_path %>
-    <%= link_to 'Sign Up', new_user_registration_path %>
-  <% end %>
-  <%= link_to 'Letter Opener', '/letter_opener' %>
+  </div>
 </nav>
