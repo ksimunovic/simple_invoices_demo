@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    @invoices = Invoice.order(created_at: :desc).all
+    @invoices = Invoice.includes(:client).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new
