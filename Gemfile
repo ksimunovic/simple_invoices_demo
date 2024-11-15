@@ -11,10 +11,11 @@ gem 'bootsnap', require: false
 gem 'faker' # To setup data on Heroku
 gem 'hotwire-rails'
 gem 'importmap-rails'
+gem 'ostruct'
+gem 'pg'
 gem 'propshaft'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 7.2.2'
-gem 'sqlite3', '>= 2.2.0'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 
