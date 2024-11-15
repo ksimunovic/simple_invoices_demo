@@ -7,4 +7,5 @@ Rails.application.routes.draw do
     delete 'delete', on: :member
   end
   resources :clients, only: [:index]
+  mount LetterOpenerWeb::Engine, at: '/letter_opener'
 end

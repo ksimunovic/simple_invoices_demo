@@ -12,6 +12,8 @@ gem 'devise'
 gem 'faker' # To setup data on Heroku
 gem 'hotwire-rails'
 gem 'importmap-rails'
+gem 'letter_opener'
+gem 'letter_opener_web', '~> 3.0'
 gem 'ostruct'
 gem 'pg'
 gem 'propshaft'
