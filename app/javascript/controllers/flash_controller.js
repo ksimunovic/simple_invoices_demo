@@ -5,9 +5,11 @@ export default class extends Controller {
     static targets = ["message"];
 
     connect() {
-        setTimeout(() => {
-            this.messageTarget.closest('.flash-message').remove();
-        }, 5000);
+        if (this.hasMessageTarget) {
+            setTimeout(() => {
+                this.messageTarget.closest('.flash-message').remove();
+            }, 5000);
+        }
     }
 
     close(event) {

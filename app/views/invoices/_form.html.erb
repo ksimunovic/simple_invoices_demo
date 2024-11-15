@@ -1,5 +1,5 @@
-<%= form_with model: invoice, scope: :invoice, local: false, id: "invoice_form" do |form| %>
-  <% if @invoice&.errors&.any? %>
+<%= form_with model: invoice, scope: :invoice, local: false, id: "invoice_form", data: { controller: 'client-suggestion' } do |form| %>
+  <% if invoice&.errors&.any? %>
     <div id="error_explanation" class="form__error">
       <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from saving:</h2>
       <ul>
@@ -10,9 +10,14 @@
     </div>
   <% end %>
 
-  <div class="form__field">
+  <div class="form__field" <%= 'style=display:none;' if invoice&.persisted? %>>
     <%= form.label :client_name, class: "form__label" %>
-    <%= form.text_field :client_name, class: "form__input" %>
+    <%= form.text_field :client_name, class: "form__input", id: 'client_name_input', value: invoice&.client&.name, placeholder: 'Enter or select client name', data: { client_suggestion_target: 'input' } %>
+    <div id="client_suggestions" data-client-suggestion-target="suggestions"></div>
+  </div>
+
+  <div class="form__field">
+    <%= form.select :client_id, options_for_select([['', '']] + Client.all.map { |c| [c.name, c.id] }, invoice&.client_id), { prompt: 'Select Client' }, { id: 'client_select', data: { client_suggestion_target: 'select' } } %>
   </div>
 
   <div class="form__field">

@@ -14,7 +14,7 @@ RSpec.configure do |config|
   config.default_formatter = 'doc' if config.files_to_run.one?
   config.order = :random
 
-  config.include FactoryBot::Syntax::Methods if defined?(FactoryBot)
+  config.include FactoryBot::Syntax::Methods
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

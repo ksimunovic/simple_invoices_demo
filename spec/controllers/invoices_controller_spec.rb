@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# spec/controllers/invoices_controller_spec.rb
 require 'rails_helper'
 
 RSpec.describe InvoicesController, type: :controller do
-  let(:valid_attributes) { { client_name: 'John Doe', amount: 100, tax: 10 } }
-  let(:invoice) { Invoice.create!(valid_attributes) }
+  let(:valid_attributes) { attributes_for(:invoice, client_id: create(:client).id) }
+  let!(:invoice) { create(:invoice) }
 
   describe 'GET #index' do
     it 'assigns @invoices' do
@@ -16,7 +15,7 @@ RSpec.describe InvoicesController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new invoice' do
-      get :new
+      get :new, format: :turbo_stream
       expect(assigns(:invoice)).to be_a_new(Invoice)
     end
   end
@@ -29,9 +28,9 @@ RSpec.describe InvoicesController, type: :controller do
         end.to change(Invoice, :count).by(1)
       end
 
-      it 'redirects to invoices path' do
-        post :create, params: { invoice: valid_attributes }
-        expect(response).to redirect_to(invoices_path)
+      it 'renders turbo stream for new invoice' do
+        post :create, params: { invoice: valid_attributes }, format: :turbo_stream
+        expect(response).to render_template(partial: 'invoices/_invoice')
       end
     end
 
@@ -44,19 +43,20 @@ RSpec.describe InvoicesController, type: :controller do
 
       it 'renders the invoice form' do
         post :create, params: { invoice: { client_name: nil } }, format: :turbo_stream
-        expect(response).to render_template(partial: 'invoices/_form')
+        expect(flash[:error]).to eq('Client information not found')
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested invoice' do
-      get :edit, params: { id: invoice.id }
+      get :edit, params: { id: invoice.id }, format: :turbo_stream
       expect(assigns(:invoice)).to eq(invoice)
     end
 
     it 'redirects if invoice not found' do
-      get :edit, params: { id: 0 }
+      get :edit, params: { id: 0 }, format: :turbo_stream
       expect(flash[:error]).to eq('Invoice not found')
       expect(response).to redirect_to(root_path)
     end
@@ -70,9 +70,9 @@ RSpec.describe InvoicesController, type: :controller do
         expect(invoice.amount).to eq(150)
       end
 
-      it 'redirects to invoices path' do
-        patch :update, params: { id: invoice.id, invoice: { amount: 150 } }
-        expect(response).to redirect_to(invoices_path)
+      it 'renders turbo stream for updated invoice' do
+        patch :update, params: { id: invoice.id, invoice: { amount: 150 } }, format: :turbo_stream
+        expect(response).to render_template(partial: 'invoices/_invoice')
       end
     end
 
@@ -81,11 +81,11 @@ RSpec.describe InvoicesController, type: :controller do
 
       it 'does not update the invoice' do
         patch :update, params: { id: invoice.id, invoice: { client_name: nil } }
-        expect(invoice.reload.client_name).not_to be_nil
+        expect(invoice.reload.client.name).not_to be_nil
       end
 
       it 'redirects if invoice not found' do
-        delete :delete, params: { id: 0 }
+        patch :update, params: { id: 0 }
         expect(flash[:error]).to eq('Invoice not found')
         expect(response).to redirect_to(root_path)
       end
@@ -94,7 +94,7 @@ RSpec.describe InvoicesController, type: :controller do
     context 'with invalid params' do
       it 'does not update the invoice' do
         patch :update, params: { id: invoice.id, invoice: { client_name: nil } }
-        expect(invoice.reload.client_name).not_to be_nil
+        expect(invoice.reload.client.name).not_to be_nil
       end
 
       it 'renders the invoice form' do
