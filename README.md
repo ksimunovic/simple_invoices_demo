@@ -1,3 +1,8 @@
+## Public URL
+
+- **Application:** [https://designfiles-invoices-app-0916fa906c57.herokuapp.com/](https://designfiles-invoices-app-0916fa906c57.herokuapp.com/)
+- **Letter Opener:** [https://designfiles-invoices-app-0916fa906c57.herokuapp.com/letter_opener/](https://designfiles-invoices-app-0916fa906c57.herokuapp.com/letter_opener/)
+
 # Installation Guide
 
 ## Requirements
@@ -21,7 +26,7 @@
 ## Docker Setup
 
 1. **Setup Environment Variables:** Create a `.env` file in the root directory:
-    ```
+    ```env
     DATABASE=your_database_name
     DB_USERNAME=your_username
     DB_PASSWORD=your_password
@@ -43,4 +48,26 @@
 5. **First Run:** Prepare the database:
     ```bash
     docker-compose run web bin/setup
+    ```
+
+## Default Credentials
+
+- **Username:** admin@designfiles
+- **Password:** admin
+
+## Steps to Reset Heroku DB
+
+1. Access Heroku console:
+    ```bash
+    heroku run bash
+    ```
+
+2. Truncate the database:
+    ```bash
+    DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rails db:truncate_all
+    ```
+
+3. Run setup:
+    ```bash
+    bin/setup
     ```
