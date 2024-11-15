@@ -6,7 +6,9 @@ require:
 AllCops:
   NewCops: disable
 Metrics/AbcSize:
-  Max: 30
+  Enabled: false
+Rails/BulkChangeTable:
+  Enabled: false
 Metrics/MethodLength:
   Max: 30
 RSpec/MultipleExpectations:

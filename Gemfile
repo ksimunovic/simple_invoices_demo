@@ -8,6 +8,7 @@ gem 'acts_as_paranoid'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
+gem 'devise'
 gem 'faker' # To setup data on Heroku
 gem 'hotwire-rails'
 gem 'importmap-rails'
@@ -24,10 +25,10 @@ group :development do
   gem 'standard-rails'
 
   gem 'rubocop'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'rubocop-rspec_rails'
-  gem 'rubocop-factory_bot'
 end
 
 group :development, :test do
