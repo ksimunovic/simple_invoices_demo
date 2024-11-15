@@ -53,7 +53,7 @@
 ## Default Credentials
 
 - **Username:** admin@designfiles
-- **Password:** admin
+- **Password:** designfiles
 
 ## Steps to Reset Heroku DB
 
@@ -70,4 +70,5 @@
 3. Run setup:
     ```bash
     bin/setup
+    rails db:seed
     ```
