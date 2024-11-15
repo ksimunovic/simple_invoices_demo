@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  host: localhost
+  host: <%= ENV['DB_HOST'] %>
   database: <%= ENV['DATABASE'] %>
 
 test:
   <<: *default
-  host: localhost
+  host: <%= ENV['DB_HOST'] %>
   database: <%= ENV['DATABASE'] %>_test
 
 production:
