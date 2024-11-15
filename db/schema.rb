@@ -10,17 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_14_111953) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_15_130819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "clients", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_clients_on_name", unique: true
+  end
+
   create_table "invoices", force: :cascade do |t|
-    t.string "client_name", null: false
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "tax", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["client_name"], name: "index_invoices_on_client_name", unique: true
+    t.bigint "client_id", null: false
+    t.index ["client_id"], name: "index_invoices_on_client_id"
   end
+
+  add_foreign_key "invoices", "clients"
 end

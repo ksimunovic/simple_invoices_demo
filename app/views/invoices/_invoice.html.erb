@@ -1,5 +1,5 @@
 <tr class="table__row" id="invoice_<%= invoice.id %>">
-  <td class="table__cell"><%= invoice.client_name %></td>
+  <td class="table__cell"><%= invoice&.client&.name %></td>
   <td class="table__cell table__cell--amount"><%= number_to_currency invoice.amount %></td>
   <td class="table__cell table__cell--amount"><%= invoice.tax %></td>
   <td class="table__cell table__cell--amount table__total"><%= number_to_currency invoice.total %></td>

@@ -11,7 +11,11 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(invoice_params)
+    client = Client.find_by(id: invoice_params[:client_id]) ||
+             Client.find_or_create_by(name: invoice_params[:client_name])
+    @invoice = Invoice.new(invoice_params.except(:client_name).merge(client: client))
+
+    return handle_missing_client_information if invoice_params[:client_id].blank? && invoice_params[:client_name].blank?
 
     if @invoice.save
       respond_to do |format|
@@ -52,7 +56,7 @@ class InvoicesController < ApplicationController
     @invoice = find_invoice
     return handle_not_found if @invoice.nil?
 
-    if @invoice.update(invoice_params)
+    if @invoice.update(invoice_params.except(:client_name))
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
@@ -97,7 +101,12 @@ class InvoicesController < ApplicationController
     redirect_to root_path
   end
 
+  def handle_missing_client_information
+    flash[:error] = 'Client information not found'
+    redirect_to root_path
+  end
+
   def invoice_params
-    params.require(:invoice).permit(:client_name, :amount, :tax)
+    params.require(:invoice).permit(:client_id, :amount, :tax, :client_name)
   end
 end
