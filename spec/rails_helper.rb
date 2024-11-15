@@ -21,4 +21,6 @@ RSpec.configure do |config|
   end
 
   config.use_transactional_fixtures = true
+
+  config.include Devise::Test::ControllerHelpers, type: :controller
 end

@@ -3,15 +3,17 @@
   <td class="table__cell table__cell--amount"><%= number_to_currency invoice.amount %></td>
   <td class="table__cell table__cell--amount"><%= invoice.tax %></td>
   <td class="table__cell table__cell--amount table__total"><%= number_to_currency invoice.total %></td>
-  <td class="table__cell table__cell--controls">
-    <%= link_to edit_invoice_path(invoice), class: "table__control table__control--edit",
-                data: { controller: "invoice", action: "invoice#edit", invoice_id: invoice.id } do %>
-      <i class="fas fa-edit"></i>
-    <% end %>
-    <%= link_to delete_invoice_path(invoice),
-                class: "table__control table__control--delete",
-                data: { controller: "invoice", action: "invoice#delete" } do %>
-      <i class="fas fa-times"></i>
-    <% end %>
-  </td>
+  <% if user_signed_in? %>
+    <td class="table__cell table__cell--controls">
+      <%= link_to edit_invoice_path(invoice), class: "table__control table__control--edit",
+                  data: { controller: "invoice", action: "invoice#edit", invoice_id: invoice.id } do %>
+        <i class="fas fa-edit"></i>
+      <% end %>
+      <%= link_to delete_invoice_path(invoice),
+                  class: "table__control table__control--delete",
+                  data: { controller: "invoice", action: "invoice#delete" } do %>
+        <i class="fas fa-times"></i>
+      <% end %>
+    </td>
+  <% end %>
 </tr>
