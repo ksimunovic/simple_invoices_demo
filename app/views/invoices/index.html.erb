@@ -19,7 +19,7 @@
   </tr>
   </thead>
   <tbody id="invoices">
-  <%= render @invoices %>
+  <%= render partial: 'invoice', :collection => @invoices %>.
 
   <%= paginate @invoices %>
   </tbody>
