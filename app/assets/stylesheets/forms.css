@@ -1,5 +1,4 @@
 
-
 .form__container {
     background-color: white;
     padding: 2rem;
@@ -25,6 +24,19 @@
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.form__input[type="select"],
+#client_select {
+    appearance: none; /* Remove default styling */
+    background-color: #f9f9f9; /* Background color */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5" style="fill:%23333;"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center; /* Position of the arrow */
+    padding: 0.5rem 2rem 0.5rem 0.5rem; /* Padding */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
 }
 
 .form__error {
