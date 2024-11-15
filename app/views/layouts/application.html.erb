@@ -8,11 +8,20 @@
   <%= csp_meta_tag %>
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" %>
-  <%= stylesheet_link_tag "application", "tables", "forms" %>
+  <%= stylesheet_link_tag "application", "tables", "forms", "flashes" %>
   <%= javascript_importmap_tags %>
 </head>
 
 <body>
+<div data-controller="flash" class="flash-container">
+  <% flash.each do |key, message| %>
+    <div class="flash-message flash-<%= key %>" data-flash-target="message">
+      <span><%= message %></span>
+      <button data-action="click->flash#close">×</button>
+    </div>
+  <% end %>
+</div>
+
 <main>
   <%= yield %>
 </main>

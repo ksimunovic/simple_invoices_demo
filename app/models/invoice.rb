@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Model for Invoice entity
 class Invoice < ApplicationRecord
   acts_as_paranoid
 

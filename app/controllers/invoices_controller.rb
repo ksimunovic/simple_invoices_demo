@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for handling invoice resource
 class InvoicesController < ApplicationController
   def index
     @invoices = Invoice.order(created_at: :desc).all
@@ -10,15 +11,17 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(invoice_params)
+    @invoice = find_invoice
+    return handle_not_found if @invoice.nil?
+
     if @invoice.save
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace('invoice_form', partial: 'invoices/form',
                                                  locals: { invoice: Invoice.new }),
-            turbo_stream.prepend("invoices", partial: 'invoices/invoice',
-                                                           locals: { invoice: @invoice })
+            turbo_stream.prepend('invoices', partial: 'invoices/invoice',
+                                             locals: { invoice: @invoice })
           ]
         end
         format.html { redirect_to invoices_path }
@@ -35,18 +38,21 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    @invoice = Invoice.find(params[:id])
+    @invoice = find_invoice
+    return handle_not_found if @invoice.nil?
+
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('invoice_form',
-                                                  partial: 'invoices/form',
-                                                  locals: { invoice: @invoice })
+        render turbo_stream: turbo_stream.replace('invoice_form', partial: 'invoices/form',
+                                                                  locals: { invoice: @invoice })
       end
     end
   end
 
   def update
-    @invoice = Invoice.find(params[:id])
+    @invoice = find_invoice
+    return handle_not_found if @invoice.nil?
+
     if @invoice.update(invoice_params)
       respond_to do |format|
         format.turbo_stream do
@@ -70,7 +76,9 @@ class InvoicesController < ApplicationController
   end
 
   def delete
-    @invoice = Invoice.find(params[:id])
+    @invoice = find_invoice
+    return handle_not_found if @invoice.nil?
+
     @invoice.destroy
 
     respond_to do |format|
@@ -80,6 +88,15 @@ class InvoicesController < ApplicationController
   end
 
   private
+
+  def find_invoice
+    Invoice.find_by(id: params[:id])
+  end
+
+  def handle_not_found
+    flash[:error] = 'Invoice not found'
+    redirect_to root_path
+  end
 
   def invoice_params
     params.require(:invoice).permit(:client_name, :amount, :tax)
