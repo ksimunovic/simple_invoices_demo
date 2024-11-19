@@ -1,9 +1,9 @@
 <%= form_with model: invoice, scope: :invoice, local: false, id: "invoice_form", data: { controller: 'client-suggestion' } do |form| %>
   <% if invoice&.errors&.any? %>
     <div id="error_explanation" class="form__error">
-      <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from saving:</h2>
+      <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from saving:</h2>
       <ul>
-        <% @invoice.errors.full_messages.each do |message| %>
+        <% invoice.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>

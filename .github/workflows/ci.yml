@@ -50,15 +50,15 @@ jobs:
           ruby-version: '3.3.5'
           bundler-cache: true
 
-      - name: Lint code with RuboCop
-        run: bundle exec rubocop -f github
+      - name: Lint code with StandardRB
+        run: bundle exec standardrb --format github
 
   test:
     runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:latest
-        env: # PostgreSQL environment variables
+        env:
           POSTGRES_DB: test_db
           POSTGRES_USER: user
           POSTGRES_PASSWORD: password
@@ -70,7 +70,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    env: # Define your environment variables here
+    env:
       DB_USERNAME: user
       DB_PASSWORD: password
       DATABASE: test_db
