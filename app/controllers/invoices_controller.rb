@@ -3,7 +3,7 @@
 # Controller for handling invoice resource
 class InvoicesController < ApplicationController
   before_action :authenticate_user!, except: [:index]
-  before_action :set_invoice, only: [:edit, :update, :delete]
+  before_action :set_invoice, only: [:edit, :update, :destroy]
 
   def index
     @invoices = Invoice.includes(:client).order(created_at: :desc).page(params[:page]).per(10)
@@ -19,8 +19,7 @@ class InvoicesController < ApplicationController
     if result[:success]
       render_invoice_response("invoice_form", Invoice.new, result[:invoice])
     else
-      flash[:error] = result[:message]
-      redirect_to root_path
+      handle_creation_error(result[:message])
     end
   end
 
@@ -36,7 +35,7 @@ class InvoicesController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @invoice.destroy
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(@invoice) }
@@ -49,10 +48,9 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find_by(id: params[:id]) || handle_not_found
   end
 
-  def find_or_create_client
-    return Client.find_by(id: invoice_params[:client_id]) if invoice_params[:client_id].present?
-
-    Client.find_or_create_by(name: invoice_params[:client_name])
+  def handle_creation_error(message)
+    flash[:error] = message
+    redirect_to root_path
   end
 
   def render_invoice_response(form_id, new_invoice, invoice = nil)
@@ -61,7 +59,6 @@ class InvoicesController < ApplicationController
         streams = [
           turbo_stream.replace(form_id, partial: "invoices/form", locals: {invoice: new_invoice})
         ]
-
         streams << turbo_stream.prepend("invoices", partial: "invoices/invoice", locals: {invoice: invoice}) if invoice
 
         render turbo_stream: streams
