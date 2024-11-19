@@ -13,4 +13,30 @@ class Invoice < ApplicationRecord
   def total
     tax.present? ? amount * (1 + (tax / 100)) : amount
   end
+
+  def self.create_with_client(invoice_params)
+    client = find_or_create_client(invoice_params)
+
+    return {success: false, message: "Client information not found"} if client.nil?
+
+    invoice = Invoice.new(invoice_params.except(:client_name).merge(client: client))
+
+    begin
+      if invoice.save
+        {success: true, invoice: invoice}
+      else
+        {success: false, invoice: invoice}
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      {success: false, message: e.message}
+    rescue => e
+      {success: false, message: e.message}
+    end
+  end
+
+  def self.find_or_create_client(invoice_params)
+    return Client.find_by(id: invoice_params[:client_id]) if invoice_params[:client_id].present?
+
+    Client.find_or_create_by(name: invoice_params[:client_name])
+  end
 end

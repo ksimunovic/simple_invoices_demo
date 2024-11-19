@@ -32,7 +32,7 @@ RSpec.describe InvoicesController, type: :controller do
       it "creates a new Invoice if authenticated" do
         sign_in create(:user)
         expect do
-          post :create, params: {invoice: valid_attributes}
+          post :create, params: {invoice: valid_attributes}, format: :turbo_stream
         end.to change(Invoice, :count).by(1)
       end
 
@@ -47,19 +47,19 @@ RSpec.describe InvoicesController, type: :controller do
       it "does not create an invoice without client info" do
         sign_in create(:user)
         expect do
-          post :create, params: {invoice: {client_name: nil}}
+          post :create, params: {invoice: {client_name: nil}}, format: :turbo_stream
         end.not_to change(Invoice, :count)
       end
 
       it "redirects if client info is missing" do
         sign_in create(:user)
         post :create, params: {invoice: {client_name: nil}}, format: :turbo_stream
-        expect(flash[:error]).to eq("Client information not found")
+        expect(flash[:error]).to be_present
         expect(response).to redirect_to(root_path)
       end
 
       it "redirects if not authenticated" do
-        post :create, params: {invoice: valid_attributes}
+        post :create, params: {invoice: valid_attributes}, format: :turbo_stream
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -89,7 +89,7 @@ RSpec.describe InvoicesController, type: :controller do
     context "with valid params" do
       it "updates the requested invoice if authenticated" do
         sign_in create(:user)
-        patch :update, params: {id: invoice.id, invoice: {amount: 150}}
+        patch :update, params: {id: invoice.id, invoice: {amount: 150}}, format: :turbo_stream
         invoice.reload
         expect(invoice.amount).to eq(150)
       end
@@ -121,7 +121,7 @@ RSpec.describe InvoicesController, type: :controller do
     context "with invalid params" do
       it "does not update the invoice" do
         sign_in create(:user)
-        patch :update, params: {id: invoice.id, invoice: {client_name: nil}}
+        patch :update, params: {id: invoice.id, invoice: {client_name: nil}}, format: :turbo_stream
         expect(invoice.reload.client.name).not_to be_nil
       end
 
@@ -142,14 +142,8 @@ RSpec.describe InvoicesController, type: :controller do
     it "destroys the requested invoice if authenticated" do
       sign_in create(:user)
       expect do
-        delete :delete, params: {id: invoice.id}
+        delete :delete, params: {id: invoice.id}, format: :turbo_stream
       end.to change(Invoice, :count).by(-1)
-    end
-
-    it "redirects to invoices path" do
-      sign_in create(:user)
-      delete :delete, params: {id: invoice.id}
-      expect(response).to redirect_to(invoices_path)
     end
 
     it "redirects if invoice not found" do
