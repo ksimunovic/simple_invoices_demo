@@ -6,5 +6,5 @@ class Client < ApplicationRecord
 
   has_many :invoices, dependent: :destroy
 
-  validates :name, presence: true, uniqueness: { allow_blank: true }
+  validates :name, presence: true, uniqueness: {allow_blank: true}
 end

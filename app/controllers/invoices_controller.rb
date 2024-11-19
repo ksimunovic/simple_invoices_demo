@@ -14,7 +14,7 @@ class InvoicesController < ApplicationController
 
   def create
     client = Client.find_by(id: invoice_params[:client_id]) ||
-             Client.find_or_create_by(name: invoice_params[:client_name])
+      Client.find_or_create_by(name: invoice_params[:client_name])
     @invoice = Invoice.new(invoice_params.except(:client_name).merge(client: client))
 
     return handle_missing_client_information if invoice_params[:client_id].blank? && invoice_params[:client_name].blank?
@@ -23,20 +23,20 @@ class InvoicesController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace('invoice_form', partial: 'invoices/form',
-                                                 locals: { invoice: Invoice.new }),
-            turbo_stream.prepend('invoices', partial: 'invoices/invoice',
-                                             locals: { invoice: @invoice })
+            turbo_stream.replace("invoice_form", partial: "invoices/form",
+              locals: {invoice: Invoice.new}),
+            turbo_stream.prepend("invoices", partial: "invoices/invoice",
+              locals: {invoice: @invoice})
           ]
         end
-        format.html { redirect_to invoices_path }
+        # format.html { redirect_to invoices_path }
       end
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('invoice_form',
-                                                    partial: 'invoices/form',
-                                                    locals: { invoice: @invoice })
+          render turbo_stream: turbo_stream.replace("invoice_form",
+            partial: "invoices/form",
+            locals: {invoice: @invoice})
         end
       end
     end
@@ -48,8 +48,8 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('invoice_form', partial: 'invoices/form',
-                                                                  locals: { invoice: @invoice })
+        render turbo_stream: turbo_stream.replace("invoice_form", partial: "invoices/form",
+          locals: {invoice: @invoice})
       end
     end
   end
@@ -62,19 +62,19 @@ class InvoicesController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace('invoice_form', partial: 'invoices/form',
-                                                 locals: { invoice: Invoice.new }),
-            turbo_stream.replace("invoice_#{@invoice.id}", partial: 'invoices/invoice',
-                                                           locals: { invoice: @invoice })
+            turbo_stream.replace("invoice_form", partial: "invoices/form",
+              locals: {invoice: Invoice.new}),
+            turbo_stream.replace("invoice_#{@invoice.id}", partial: "invoices/invoice",
+              locals: {invoice: @invoice})
           ]
         end
-        format.html { redirect_to invoices_path }
+        # format.html { redirect_to invoices_path }
       end
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('invoice_form', partial: 'invoices/form',
-                                                                    locals: { invoice: @invoice })
+          render turbo_stream: turbo_stream.replace("invoice_form", partial: "invoices/form",
+            locals: {invoice: @invoice})
         end
       end
     end
@@ -99,12 +99,12 @@ class InvoicesController < ApplicationController
   end
 
   def handle_not_found
-    flash[:error] = 'Invoice not found'
+    flash[:error] = "Invoice not found"
     redirect_to root_path
   end
 
   def handle_missing_client_information
-    flash[:error] = 'Client information not found'
+    flash[:error] = "Client information not found"
     redirect_to root_path
   end
 
