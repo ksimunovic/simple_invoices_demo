@@ -142,19 +142,19 @@ RSpec.describe InvoicesController, type: :controller do
     it "destroys the requested invoice if authenticated" do
       sign_in create(:user)
       expect do
-        delete :delete, params: {id: invoice.id}, format: :turbo_stream
+        delete :destroy, params: {id: invoice.id}, format: :turbo_stream
       end.to change(Invoice, :count).by(-1)
     end
 
     it "redirects if invoice not found" do
       sign_in create(:user)
-      delete :delete, params: {id: 0}
+      delete :destroy, params: {id: 0}
       expect(flash[:error]).to eq("Invoice not found")
       expect(response).to redirect_to(root_path)
     end
 
     it "redirects if not authenticated" do
-      delete :delete, params: {id: invoice.id}
+      delete :destroy, params: {id: invoice.id}
       expect(response).to redirect_to(new_user_session_path)
     end
   end

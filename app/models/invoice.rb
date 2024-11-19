@@ -21,22 +21,26 @@ class Invoice < ApplicationRecord
 
     invoice = Invoice.new(invoice_params.except(:client_name).merge(client: client))
 
-    begin
-      if invoice.save
-        {success: true, invoice: invoice}
-      else
-        {success: false, invoice: invoice}
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      {success: false, message: e.message}
-    rescue => e
-      {success: false, message: e.message}
+    save_invoice(invoice)
+  end
+
+  def self.save_invoice(invoice)
+    if invoice.save
+      {success: true, invoice: invoice}
+    else
+      {success: false, invoice: invoice}
     end
+  rescue ActiveRecord::RecordInvalid => e
+    {success: false, message: e.message}
+  rescue => e
+    {success: false, message: e.message}
   end
 
   def self.find_or_create_client(invoice_params)
-    return Client.find_by(id: invoice_params[:client_id]) if invoice_params[:client_id].present?
-
-    Client.find_or_create_by(name: invoice_params[:client_name])
+    if invoice_params[:client_id].present?
+      Client.find_by(id: invoice_params[:client_id]) || Client.create(name: invoice_params[:client_name])
+    else
+      Client.find_or_create_by(name: invoice_params[:client_name])
+    end
   end
 end
