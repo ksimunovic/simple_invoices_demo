@@ -1,7 +1,7 @@
 ## Public URL
 
-- **Application:** [https://designfiles-invoices-app-0916fa906c57.herokuapp.com/](https://designfiles-invoices-app-0916fa906c57.herokuapp.com/)
-- **Letter Opener:** [https://designfiles-invoices-app-0916fa906c57.herokuapp.com/letter_opener/](https://designfiles-invoices-app-0916fa906c57.herokuapp.com/letter_opener/)
+- **Application:** [https://simple-invoices-demo-7e50297794e7.herokuapp.com/](https://simple-invoices-demo-7e50297794e7.herokuapp.com/)
+- **Letter Opener:** [https://simple-invoices-demo-7e50297794e7.herokuapp.com/letter_opener/](https://simple-invoices-demo-7e50297794e7.herokuapp.com/letter_opener/)
 
 # Installation Guide
 
