@@ -15,7 +15,7 @@ gem "importmap-rails"
 gem "kaminari"
 gem "letter_opener"
 gem "letter_opener_web", "~> 3.0"
-gem "ostruct"
+gem "ostruct", "~> 0.6.1"
 gem "pg"
 gem "propshaft"
 gem "puma", ">= 5.0"
@@ -25,7 +25,7 @@ gem "turbo-rails"
 
 group :development do
   gem "bullet"
-  gem "standard"
+  gem "standard", "~> 1.42.1"
   gem "standard-rails"
 end
 
