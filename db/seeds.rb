@@ -6,4 +6,4 @@
     tax: [nil, 8, 12, 30].sample)
 end
 
-User.create!(email: "admin@designfiles", password: "designfiles", password_confirmation: "designfiles")
+User.create!(email: "admin@simple_invoice", password: "simple_invoice", password_confirmation: "simple_invoice")

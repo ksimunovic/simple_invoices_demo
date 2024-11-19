@@ -52,8 +52,8 @@
 
 ## Default Credentials
 
-- **Username:** admin@designfiles
-- **Password:** designfiles
+- **Username:** admin@simple_invoice
+- **Password:** simple_invoice
 
 ## Steps to Reset Heroku DB
 
