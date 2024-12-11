@@ -25,7 +25,7 @@ gem "turbo-rails"
 
 group :development do
   gem "bullet"
-  gem "standard", "~> 1.42.1"
+  gem "standard", "~> 1.43.0"
   gem "standard-rails"
 end
 
