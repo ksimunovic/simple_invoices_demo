@@ -19,7 +19,7 @@ gem "ostruct", "~> 0.6.1"
 gem "pg"
 gem "propshaft"
 gem "puma", ">= 5.0"
-gem "rails", "~> 7.2.2"
+gem "rails", "~> 8.0.1"
 gem "stimulus-rails"
 gem "turbo-rails"
 
